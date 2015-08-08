@@ -38,17 +38,24 @@ class Board
   end
 
   def won?
-    return check_columns
+    return check_columns || check_rows
   end
 
-  def check_columns
-    @board.each do |col|
+  private
+
+  def check_columns(board = @board)
+    board.each do |col|
       (0..3).each do |idx|
-        state = col[idx..(idx + 3)].all? { |el| el == col[idx] && !el.nil? }
-        return true if state
+        won = col[idx..(idx + 3)].all? { |el| el == col[idx] && !el.nil? }
+        return true if won
       end
     end
 
     false
+  end
+
+  def check_rows
+    transposed_board = @board.transpose
+    check_columns(transposed_board)
   end
 end

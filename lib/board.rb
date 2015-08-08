@@ -43,8 +43,8 @@ class Board
 
   def check_columns
     @board.each do |col|
-      (0..2).each do |idx|
-        state = col[idx..(idx + 3)].all? { |el| el == col[idx] }
+      (0..3).each do |idx|
+        state = col[idx..(idx + 3)].all? { |el| el == col[idx] && !el.nil? }
         return true if state
       end
     end

@@ -34,6 +34,3 @@ class HumanPlayer
     end
   end
 end
-
-g = Game.new
-g.play

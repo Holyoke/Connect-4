@@ -1,7 +1,7 @@
 require "byebug"
 
 class Board
-  attr_reader :board
+  attr_writer :board
   def initialize(cols = 7, rows = 6)
     @cols, @rows = cols, rows
     @board = create_board
@@ -30,13 +30,25 @@ class Board
   end
 
   def display
-    @board.map do |row|
-      row.map do |piece|
+    @board.map do |col|
+      col.map do |piece|
         piece.nil? ? '[ ]' : "[#{piece}]"
       end.join
     end.join("\n")
   end
 
   def won?
+    return check_columns
+  end
+
+  def check_columns
+    @board.each do |col|
+      (0..2).each do |idx|
+        state = col[idx..(idx + 3)].all? { |el| el == col[idx] }
+        return true if state
+      end
+    end
+
+    false
   end
 end

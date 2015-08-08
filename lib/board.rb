@@ -58,4 +58,8 @@ class Board
     transposed_board = @board.transpose
     check_columns(transposed_board)
   end
+
+  def check_diaganols
+
+  end
 end

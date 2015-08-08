@@ -1,10 +1,14 @@
 require "board.rb"
 
 describe "Winning Conditions" do
+  before :all do
+    @board = Board.new
+  end
+
   context "Columns Check" do
     it "checks first column earlier slots" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [:w, :w, :w, :w, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -14,12 +18,12 @@ describe "Winning Conditions" do
         [nil, nil, nil, nil, nil, nil, nil],
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
 
     it "checks first column later slots" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [:b, :b, :b, :w, :w, :w, :w],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -29,12 +33,12 @@ describe "Winning Conditions" do
         [nil, nil, nil, nil, nil, nil, nil],
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
 
     it "checks last column early slots" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -44,12 +48,12 @@ describe "Winning Conditions" do
         [:w, :w, :w, :w, nil, nil, nil]
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
 
     it "checks last column later slots" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -59,14 +63,14 @@ describe "Winning Conditions" do
         [:w, :w, :w, :b, :b, :b, :b]
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
   end
 
   context "Rows Check" do
     it "checks bottom rows, columns 0 to 3" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [:w, nil, nil, nil, nil, nil, nil],
         [:w, nil, nil, nil, nil, nil, nil],
         [:w, nil, nil, nil, nil, nil, nil],
@@ -75,12 +79,12 @@ describe "Winning Conditions" do
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil]
       ]
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
 
     it "checks bottom rows, columns 3 to 6" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [:w, nil, nil, nil, nil, nil, nil],
         [:w, nil, nil, nil, nil, nil, nil],
         [:w, nil, nil, nil, nil, nil, nil],
@@ -90,12 +94,12 @@ describe "Winning Conditions" do
         [nil, nil, nil, nil, nil, nil, nil]
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
 
     it "checks bottom rows, columns 0 to 3" do
-      board = Board.new
-      board.board = [
+
+      @board.board = [
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -105,10 +109,25 @@ describe "Winning Conditions" do
         [nil, nil, nil, nil, nil, nil, :b]
       ]
 
-      expect(board.won?).to eq(true)
+      expect(@board.won?).to eq(true)
     end
   end
-  context "diagonal NE rows"
-  context "diagonal SW rows"
+
+  context "diagonal / rows"
+    it "checks diaganols from the SW corner" do
+
+      @board.board = [
+        [:b, nil, nil, nil, nil, nil, nil],
+        [nil, :b, nil, nil, nil, nil, nil],
+        [nil, nil, :b, nil, nil, nil, nil],
+        [nil, nil, nil, :b, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil]
+      ]
+
+      expect(@board.won?).to eq(true)
+    end
+  context "diagonal \ rows"
 
 end

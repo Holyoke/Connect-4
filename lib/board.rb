@@ -31,13 +31,14 @@ class Board
   end
 
   def display
-    display = @board
+    display = ""
 
-    display.map do |col|
-      col.map do |piece|
-        piece.nil? ? '[ ]' : "[#{piece}]"
-      end.join
-    end.join("\n")
+    @height.downto(0) do |level|
+      display += @board[level].map { |piece| piece.nil? ? '[ ]' : "[#{piece}]" }.join
+      display += "\n"
+    end
+
+    display
   end
 
   def won?

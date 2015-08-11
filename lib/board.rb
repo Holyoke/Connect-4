@@ -26,13 +26,13 @@ class Board
     blank_idx = @height - free_slots
     @board[col][blank_idx] = piece
 
-    # puts
-    # puts display
+    puts
+    puts display
   end
 
   def display
     display = @board
-
+    
     display.map do |col|
       col.map do |piece|
         piece.nil? ? '[ ]' : "[#{piece}]"

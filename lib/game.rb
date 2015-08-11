@@ -1,8 +1,8 @@
 require_relative 'board'
 
 class Game
-  def initialize
-    @board = Board.new
+  def initialize(columns = 7, height = 6)
+    @board = Board.new(columns, height)
     @players = {
       white: HumanPlayer.new(:w),
       black: HumanPlayer.new(:b)
@@ -11,10 +11,16 @@ class Game
   end
 
   def play
-    42.times do |x|
+
+    turns = 0
+    until @board.won? || turns >= 42
+      turns += 1
+      @current_player = (turns % 2 == 0) ? :black : :white
+
       @players[@current_player].play_turn(@board)
-      @current_player = (x % 2 == 0) ? :black : :white
     end
+
+    puts "#{@current_player} won!"
   end
 end
 
@@ -34,3 +40,6 @@ class HumanPlayer
     end
   end
 end
+
+game = Game.new
+game.play

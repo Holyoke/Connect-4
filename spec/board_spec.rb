@@ -114,50 +114,78 @@ describe "Winning Conditions" do
   end
 
   context "diagonal / rows"
-    it "checks diaganols from the SW corner" do
+  it "checks / diaganols from the SW corner" do
 
+    @board.board = [
+      [:b, nil, nil, nil, nil, nil, nil],
+      [nil, :b, nil, nil, nil, nil, nil],
+      [nil, nil, :b, nil, nil, nil, nil],
+      [nil, nil, nil, :b, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil]
+    ]
+
+    expect(@board.won?).to eq(true)
+  end
+
+  it "checks / diaganols toward the middle" do
+
+    @board.board = [
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, :b, nil, nil, nil, nil],
+      [nil, nil, nil, :b, nil, nil, nil],
+      [nil, nil, nil, nil, :b, nil, nil],
+      [nil, nil, nil, nil, nil, :b, nil],
+      [nil, nil, nil, nil, nil, nil, nil]
+    ]
+
+    expect(@board.won?).to eq(true)
+  end
+
+  it "checks / diaganols at the last column" do
+
+    @board.board = [
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, nil, nil, nil, nil, nil],
+      [nil, nil, :b, nil, nil, nil, nil],
+      [nil, nil, nil, :b, nil, nil, nil],
+      [nil, nil, nil, nil, :b, nil, nil],
+      [nil, nil, nil, nil, nil, :b, nil]
+    ]
+
+    expect(@board.won?).to eq(true)
+  end
+  context 'diagonal \ rows' do
+    it "checks / diaganols at the NW corner" do
       @board.board = [
-        [:b, nil, nil, nil, nil, nil, nil],
-        [nil, :b, nil, nil, nil, nil, nil],
-        [nil, nil, :b, nil, nil, nil, nil],
-        [nil, nil, nil, :b, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil]
-      ]
-
-      expect(@board.won?).to eq(true)
-    end
-
-    it "checks diaganols from the SW corner toward the middle" do
-
-      @board.board = [
-        [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, :b, nil, nil, nil, nil],
-        [nil, nil, nil, :b, nil, nil, nil],
-        [nil, nil, nil, nil, :b, nil, nil],
+        [nil, nil, nil, nil, nil, nil, :b],
         [nil, nil, nil, nil, nil, :b, nil],
+        [nil, nil, nil, nil, :b, nil, nil],
+        [nil, nil, nil, :b, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil]
       ]
 
       expect(@board.won?).to eq(true)
     end
 
-    it "checks diaganols from the SW corner ending at the last column" do
-
+    it "checks / diaganols ending at the last column" do
       @board.board = [
+        [1, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, :b, nil, nil, nil, nil],
         [nil, nil, nil, :b, nil, nil, nil],
-        [nil, nil, nil, nil, :b, nil, nil],
-        [nil, nil, nil, nil, nil, :b, nil]
+        [nil, nil, :b, nil, nil, nil, nil],
+        [nil, :b, nil, nil, nil, nil, nil],
+        [:b, nil, nil, nil, nil, nil, nil]
       ]
 
       expect(@board.won?).to eq(true)
     end
-  context 'diagonal \ rows'
+  end
 
 end

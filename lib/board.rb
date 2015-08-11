@@ -1,28 +1,29 @@
 require "byebug"
 
 class Board
-  attr_writer :board
-  def initialize(cols = 7, rows = 6)
-    @cols, @rows = cols, rows
+  attr_accessor :board
+
+  def initialize(cols = 7, height = 6)
+    @cols, @height = cols, height
     @board = create_board
   end
 
   def create_board
     board = []
     @cols.times do
-      board << Array.new(@rows)
+      board << Array.new(@height)
     end
 
     board
   end
 
   def fill_column(col, piece)
-    raise "Invalid move, pick a column between 0 and #{@cols - 1}" if col > @rows
+    raise "Invalid move, pick a column between 0 and #{@cols - 1}" if col > @height
 
     free_slots = @board[col].count { |el| el.nil? }
     raise "Invalid move, column #{col} is full" if free_slots == 0
 
-    blank_idx = @rows - free_slots
+    blank_idx = @height - free_slots
     @board[col][blank_idx] = piece
 
     # puts
@@ -40,7 +41,7 @@ class Board
   end
 
   def won?
-    return check_columns || check_rows || check_diaganols
+    return check_columns || check_rows || check_upward_diaganols || check_downward_diaganols
   end
 
   private
@@ -61,10 +62,10 @@ class Board
     check_columns(transposed_board)
   end
 
-  def check_diaganols
+  def check_upward_diaganols
     (0..3).each do |col_idx|
       (0..3).each do |col_height|
-        diagonal_group = find_diagonal_up_starting_at(col_idx, col_height)
+        diagonal_group = find_upward_diaganol_starting_at(col_idx, col_height)
         return true if diagonal_group.all?{ |el| diagonal_group.first && !el.nil?}
       end
     end
@@ -72,13 +73,35 @@ class Board
     false
   end
 
-  def find_diagonal_up_starting_at(col_idx, col_height)
+  def find_upward_diaganol_starting_at(col_idx, col_height)
     diagonal_group = []
 
     (col_idx..(col_idx + 3)).each_with_index do |col, height|
-      diagonal_group << @board[col][col_height + height]
+      diagonal_group << board[col][col_height + height]
     end
 
     diagonal_group
   end
+
+  def check_downward_diaganols
+    (0..3).each do |col_idx|
+      (3..6).each do |col_height|
+        diagonal_group = find_downward_diaganol_starting_at(col_idx, col_height)
+        return true if diagonal_group.all?{ |el| diagonal_group.first && !el.nil?}
+      end
+    end
+
+    false
+  end
+
+  def find_downward_diaganol_starting_at(col_idx, col_height)
+    diagonal_group = []
+
+    (col_idx..(col_idx + 3)).each_with_index do |col, height|
+      diagonal_group << board[col][col_height - height]
+    end
+
+    diagonal_group
+  end
+
 end

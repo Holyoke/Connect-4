@@ -17,7 +17,7 @@ class Board
   end
 
   def fill_column(col, piece)
-    raise "Invalid move, pick a column between 0 and #{7 - 1}" if col > 6
+    raise "Invalid move, pick a column between 0 and #{@cols - 1}" if col > @rows
 
     free_slots = @board[col].count { |el| el.nil? }
     raise "Invalid move, column #{col} is full" if free_slots == 0
@@ -25,12 +25,14 @@ class Board
     blank_idx = @rows - free_slots
     @board[col][blank_idx] = piece
 
-    puts
-    puts display
+    # puts
+    # puts display
   end
 
   def display
-    @board.map do |col|
+    display = @board
+
+    display.map do |col|
       col.map do |piece|
         piece.nil? ? '[ ]' : "[#{piece}]"
       end.join
@@ -38,7 +40,7 @@ class Board
   end
 
   def won?
-    return check_columns || check_rows
+    return check_columns || check_rows || check_diaganols
   end
 
   private
@@ -60,6 +62,23 @@ class Board
   end
 
   def check_diaganols
+    (0..3).each do |col_idx|
+      (0..3).each do |col_height|
+        diagonal_group = find_diagonal_up_starting_at(col_idx, col_height)
+        return true if diagonal_group.all?{ |el| diagonal_group.first && !el.nil?}
+      end
+    end
 
+    false
+  end
+
+  def find_diagonal_up_starting_at(col_idx, col_height)
+    diagonal_group = []
+
+    (col_idx..(col_idx + 3)).each_with_index do |col, height|
+      diagonal_group << @board[col][col_height + height]
+    end
+
+    diagonal_group
   end
 end

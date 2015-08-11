@@ -128,6 +128,36 @@ describe "Winning Conditions" do
 
       expect(@board.won?).to eq(true)
     end
-  context "diagonal \ rows"
+
+    it "checks diaganols from the SW corner toward the middle" do
+
+      @board.board = [
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, :b, nil, nil, nil, nil],
+        [nil, nil, nil, :b, nil, nil, nil],
+        [nil, nil, nil, nil, :b, nil, nil],
+        [nil, nil, nil, nil, nil, :b, nil],
+        [nil, nil, nil, nil, nil, nil, nil]
+      ]
+
+      expect(@board.won?).to eq(true)
+    end
+
+    it "checks diaganols from the SW corner ending at the last column" do
+
+      @board.board = [
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, :b, nil, nil, nil, nil],
+        [nil, nil, nil, :b, nil, nil, nil],
+        [nil, nil, nil, nil, :b, nil, nil],
+        [nil, nil, nil, nil, nil, :b, nil]
+      ]
+
+      expect(@board.won?).to eq(true)
+    end
+  context 'diagonal \ rows'
 
 end

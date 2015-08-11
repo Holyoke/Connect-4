@@ -11,9 +11,9 @@ class Game
   end
 
   def play
-
     turns = 0
-    until @board.won? || turns >= 42
+    max_turns = @board.cols * @board.height
+    until @board.won? || turns >= max_turns
       turns += 1
       @current_player = (turns % 2 == 0) ? :black : :white
 

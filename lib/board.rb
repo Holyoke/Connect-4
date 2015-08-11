@@ -2,7 +2,7 @@ require "byebug"
 
 class Board
   attr_accessor :board
-
+  attr_reader :cols, :height
   def initialize(cols = 7, height = 6)
     @cols, @height = cols, height
     @board = create_board
@@ -32,7 +32,7 @@ class Board
 
   def display
     display = @board
-    
+
     display.map do |col|
       col.map do |piece|
         piece.nil? ? '[ ]' : "[#{piece}]"

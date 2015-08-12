@@ -2,7 +2,7 @@
 
 This is a basic ruby implementation of the classic game, Connect 4. To run type
 
-> `ruby connect-four.rb`
+`ruby connect-four.rb`
 
 in the directory with the console.
 

@@ -1,11 +1,16 @@
 require_relative 'board'
+require_relative 'player'
 
 class Game
-  def initialize(columns = 7, height = 6)
+  def initialize(columns = 7, height = 6,
+    player_one = ComputerPlayer.new(:w),
+    player_two = ComputerPlayer.new(:b)
+    )
+
     @board = Board.new(columns, height)
     @players = {
-      white: HumanPlayer.new(:w),
-      black: HumanPlayer.new(:b)
+      white: player_one,
+      black: player_two
     }
     @current_player = :white
   end
@@ -16,30 +21,13 @@ class Game
 
     until @board.won? || turns >= max_turns
       turns += 1
-      @current_player = (turns % 2 == 0) ? :black : :white
+      @current_player = (turns % 2 == 0) ? :white : :black
+      puts "#{@current_player}'s turn..."
+      puts
+
       @players[@current_player].play_turn(@board)
     end
 
     puts "#{@current_player} won!"
   end
 end
-
-class HumanPlayer
-  attr_reader :color
-
-  def initialize(color)
-    @color = color
-  end
-
-  def play_turn(board)
-    begin
-      board.fill_column(rand(7), @color)
-    rescue Exception => e
-      puts e
-      retry
-    end
-  end
-end
-
-game = Game.new
-game.play

@@ -1,8 +1,7 @@
-require "byebug"
-
 class Board
   attr_accessor :board
   attr_reader :cols, :height
+
   def initialize(cols = 7, height = 6)
     @cols, @height = cols, height
     @board = create_board
@@ -26,6 +25,7 @@ class Board
     blank_idx = @height - free_slots
     @board[col][blank_idx] = piece
 
+    puts "#{piece} placed at #{col}, #{blank_idx}"
     puts
     puts display
   end
@@ -34,10 +34,14 @@ class Board
     display = ""
 
     @height.downto(0) do |level|
-      display += @board[level].map { |piece| piece.nil? ? '[ ]' : "[#{piece}]" }.join
+      @board.each do |row|
+        piece = row[level]
+        display += piece.nil? ? "[ ]" : "[#{piece}]"
+      end
       display += "\n"
     end
 
+    display += (0..6).map {|x| " #{x} "}.join
     display
   end
 
@@ -67,7 +71,9 @@ class Board
     (0..3).each do |col_idx|
       (0..3).each do |col_height|
         diagonal_group = find_upward_diaganol_starting_at(col_idx, col_height)
-        return true if diagonal_group.all?{ |el| diagonal_group.first && !el.nil?}
+        if diagonal_group.all?{ |el| diagonal_group.first == el && !el.nil?}
+          return true
+        end
       end
     end
 
@@ -88,7 +94,9 @@ class Board
     (0..3).each do |col_idx|
       (3..6).each do |col_height|
         diagonal_group = find_downward_diaganol_starting_at(col_idx, col_height)
-        return true if diagonal_group.all?{ |el| diagonal_group.first && !el.nil?}
+        if diagonal_group.all?{ |el| diagonal_group.first == el && !el.nil?}
+          return true
+        end
       end
     end
 

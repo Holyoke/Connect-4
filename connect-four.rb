@@ -1,4 +1,4 @@
-require_relative "game.rb"
+require_relative "lib/game.rb"
 
 if $PROGRAM_NAME == __FILE__
   puts "Let's play some Connect 4!"
@@ -23,6 +23,6 @@ if $PROGRAM_NAME == __FILE__
     game = Game.new(player1, player2)
     game.play
   else
-    puts "Not a valid option! Quitting program." 
+    puts "Not a valid option! Quitting program."
   end
 end
